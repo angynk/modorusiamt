@@ -51,6 +51,12 @@
           <element id="library" level="project" name="Maven: org.hibernate.common:hibernate-commons-annotations:5.0.1.Final" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.6" />
           <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
+          <element id="library" level="project" name="Maven: org.apache.poi:poi:3.11-beta2" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.poi:poi-ooxml:3.11-beta2" />
+          <element id="library" level="project" name="Maven: org.apache.poi:poi-ooxml-schemas:3.11-beta2" />
+          <element id="library" level="project" name="Maven: org.apache.xmlbeans:xmlbeans:2.6.0" />
+          <element id="library" level="project" name="Maven: stax:stax-api:1.0.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">
