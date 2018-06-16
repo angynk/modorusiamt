@@ -51,6 +51,13 @@ public class ConfigRestController {
         return new ResponseEntity<List<String>>(valor, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/cargar-posiciones/", method = RequestMethod.GET)
+    public ResponseEntity<Boolean> cargarPosiciones() {
+        Boolean valor = calcularPrimeraFecha.cargarPosiciones();
+        calcularMarcadores.cargarListado();
+        return new ResponseEntity<Boolean>(valor, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/listado/", method = RequestMethod.GET)
     public ResponseEntity<Listado> listado() {
         Listado listado = calcularMarcadores.getListado();

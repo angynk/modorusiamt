@@ -33,8 +33,8 @@ public class ListaPosicionesServicio {
         return "OK";
     }
 
-    public Pollero obtenerPollero(Integer codigo) {
-        return polleroDao.buscarPollero(codigo);
+    public Pollero obtenerPollero(Integer codigo, String correo) {
+        return polleroDao.buscarPollero(codigo,correo);
     }
 
     public void actualizarPollero(Pollero pollero) {

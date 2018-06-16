@@ -35,6 +35,7 @@ public class PrimeraFechaDEF {
     public static int POLONIA = 31;
     public static int SENEGAL = 32;
     public static int CODIGO = 33;
+    public static int CORREO = 34;
 
     public static String PARTIDO_1 ="Ru-As";
     public static String PARTIDO_2 ="Eg-Ur";
@@ -44,7 +45,7 @@ public class PrimeraFechaDEF {
     public static String PARTIDO_6 ="Pe-Di";
     public static String PARTIDO_7 ="Ar-Is";
     public static String PARTIDO_8 ="Cr-Ni";
-    public static String PARTIDO_9 ="Ko-Se";
+    public static String PARTIDO_9 ="Ct-Ser";
     public static String PARTIDO_10 ="Br-Su";
     public static String PARTIDO_11 ="Al-Me";
     public static String PARTIDO_12 ="Se-Co";

@@ -52,4 +52,11 @@ public class PolleroDao {
         criteria.addOrder(Order.desc("puntuacion"));
         return criteria.list();
     }
+
+    public Pollero buscarPollero(Integer codigo, String correo) {
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Pollero.class);
+        criteria.add(Restrictions.eq("codigo",codigo));
+        criteria.add(Restrictions.eq("email",correo));
+        return (Pollero) criteria.uniqueResult();
+    }
 }
