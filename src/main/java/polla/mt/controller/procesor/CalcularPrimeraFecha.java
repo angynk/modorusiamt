@@ -6,6 +6,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import polla.mt.controller.servicios.ListaPosicionesServicio;
+import polla.mt.model.entity.Dependencia;
+import polla.mt.model.entity.DependenciaJSON;
+import polla.mt.model.entity.DependenciaPos;
 import polla.mt.model.entity.Pollero;
 
 import java.io.FileInputStream;
@@ -82,7 +85,7 @@ public class CalcularPrimeraFecha {
 //        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_3,predicciones);
 //        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_4,predicciones);
 //        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_5,predicciones);
-        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_6,predicciones);
+//        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_6,predicciones);
 //        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_7,predicciones);
         puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_8,predicciones);
         puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_9,predicciones);
@@ -155,8 +158,8 @@ public class CalcularPrimeraFecha {
        // predicciones.put(PrimeraFechaDEF.PARTIDO_3,obtenerValores(PrimeraFechaDEF.MARRUECOS,PrimeraFechaDEF.IRAN,row));
        // predicciones.put(PrimeraFechaDEF.PARTIDO_4,obtenerValores(PrimeraFechaDEF.PORTUGAL,PrimeraFechaDEF.ESPANA,row));
       //  predicciones.put(PrimeraFechaDEF.PARTIDO_5,obtenerValores(PrimeraFechaDEF.FRANCIA,PrimeraFechaDEF.AUSTRALIA,row));
-        predicciones.put(PrimeraFechaDEF.PARTIDO_6,obtenerValores(PrimeraFechaDEF.PERU,PrimeraFechaDEF.DINAMARCA,row));
-       // predicciones.put(PrimeraFechaDEF.PARTIDO_7,obtenerValores(PrimeraFechaDEF.ARGENTINA,PrimeraFechaDEF.ISLANDIA,row));
+//        predicciones.put(PrimeraFechaDEF.PARTIDO_6,obtenerValores(PrimeraFechaDEF.PERU,PrimeraFechaDEF.DINAMARCA,row));
+        predicciones.put(PrimeraFechaDEF.PARTIDO_7,obtenerValores(PrimeraFechaDEF.ARGENTINA,PrimeraFechaDEF.ISLANDIA,row));
         predicciones.put(PrimeraFechaDEF.PARTIDO_8,obtenerValores(PrimeraFechaDEF.CROACIA,PrimeraFechaDEF.NIGERIA,row));
         predicciones.put(PrimeraFechaDEF.PARTIDO_9,obtenerValores(PrimeraFechaDEF.COSTARICA,PrimeraFechaDEF.SERBIA,row));
         predicciones.put(PrimeraFechaDEF.PARTIDO_10,obtenerValores(PrimeraFechaDEF.BRASIL,PrimeraFechaDEF.SUIZA,row));
@@ -200,5 +203,72 @@ public class CalcularPrimeraFecha {
     public boolean cargarPosiciones() {
         reorganizarPosiciones();
         return true;
+    }
+
+    public DependenciaPos cargarDependencias() {
+        calcularPuntajeDependencias();
+        reorganizarDependencias();
+        List<Dependencia> dependencias = listaPosicionesServicio.cargarDependencias();
+
+        DependenciaPos dependenciaPos = new DependenciaPos();
+        List<DependenciaJSON> json = new ArrayList<>();
+        for(Dependencia dependencia:dependencias){
+            DependenciaJSON dep = new DependenciaJSON();
+            dep.setDependencia(dependencia.getNombre());
+            dep.setPosicion(dependencia.getPosicion());
+            dep.setPuntuacion(dependencia.getPuntuacion());
+            json.add(dep);
+        }
+
+        dependenciaPos.setPosiciones(json);
+
+        return dependenciaPos;
+
+    }
+
+    private void reorganizarDependencias() {
+        List<Dependencia> dependencias = listaPosicionesServicio.cargarDependencias();
+        int posicion = 1;
+        int band = 0;
+        Dependencia anterior = null;
+        for(Dependencia dependencia:dependencias){
+            if(band==0){
+                dependencia.setPosicion(posicion);
+                listaPosicionesServicio.actualizarDependencia(dependencia);
+            }else{
+                if(anterior.getPuntuacion()!= dependencia.getPuntuacion()){
+                    posicion++;
+                }
+                dependencia.setPosicion(posicion);
+                listaPosicionesServicio.actualizarDependencia(dependencia);
+            }
+            anterior = dependencia;
+            band++;
+        }
+    }
+
+    private void calcularPuntajeDependencias() {
+        List<Dependencia> dependencias = listaPosicionesServicio.cargarDependencias();
+        for(Dependencia dependencia:dependencias){
+            listaPosicionesServicio.calcularPuntuacion(dependencia);
+        }
+    }
+
+    public DependenciaPos obtenerDependencias() {
+        List<Dependencia> dependencias = listaPosicionesServicio.cargarDependencias();
+
+        DependenciaPos dependenciaPos = new DependenciaPos();
+        List<DependenciaJSON> json = new ArrayList<>();
+        for(Dependencia dependencia:dependencias){
+            DependenciaJSON dep = new DependenciaJSON();
+            dep.setDependencia(dependencia.getNombre());
+            dep.setPosicion(dependencia.getPosicion());
+            dep.setPuntuacion(dependencia.getPuntuacion());
+            json.add(dep);
+        }
+
+        dependenciaPos.setPosiciones(json);
+
+        return dependenciaPos;
     }
 }

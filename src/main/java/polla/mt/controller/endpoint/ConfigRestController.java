@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import polla.mt.controller.procesor.CalcularMarcadores;
 import polla.mt.controller.procesor.CalcularPrimeraFecha;
 import polla.mt.controller.procesor.CargarPolleros;
+import polla.mt.model.entity.DependenciaPos;
 import polla.mt.model.entity.Listado;
 
 import java.util.List;
@@ -56,6 +57,18 @@ public class ConfigRestController {
         Boolean valor = calcularPrimeraFecha.cargarPosiciones();
         calcularMarcadores.cargarListado();
         return new ResponseEntity<Boolean>(valor, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/cargar-dependencias/", method = RequestMethod.GET)
+    public ResponseEntity<DependenciaPos> cargarDependencias() {
+        DependenciaPos dependenciaPos = calcularPrimeraFecha.cargarDependencias();
+        return new ResponseEntity<DependenciaPos>(dependenciaPos, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/dependencias/", method = RequestMethod.GET)
+    public ResponseEntity<DependenciaPos> dependencias() {
+        DependenciaPos dependenciaPos = calcularPrimeraFecha.obtenerDependencias();
+        return new ResponseEntity<DependenciaPos>(dependenciaPos, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/listado/", method = RequestMethod.GET)

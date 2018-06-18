@@ -2,8 +2,10 @@ package polla.mt.controller.servicios;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import polla.mt.model.dao.DependenciaDao;
 import polla.mt.model.dao.LogDao;
 import polla.mt.model.dao.PolleroDao;
+import polla.mt.model.entity.Dependencia;
 import polla.mt.model.entity.Log;
 import polla.mt.model.entity.Pollero;
 
@@ -15,6 +17,9 @@ public class ListaPosicionesServicio {
 
     @Autowired
     private PolleroDao polleroDao;
+
+    @Autowired
+    private DependenciaDao dependenciaDao;
 
     @Autowired
     private LogDao logDao;
@@ -52,5 +57,18 @@ public class ListaPosicionesServicio {
 
     public List<Pollero> obtenerPollerosPorPuntaje() {
         return polleroDao.obtenerPollerosPorPuntaje();
+    }
+
+    public List<Dependencia> cargarDependencias() {
+        return  dependenciaDao.obtenerListadoPosiciones();
+
+    }
+
+    public void calcularPuntuacion(Dependencia dependencia) {
+        dependenciaDao.calcularPuntuacion(dependencia);
+    }
+
+    public void actualizarDependencia(Dependencia dependencia) {
+        dependenciaDao.actualizarDependencia(dependencia);
     }
 }
