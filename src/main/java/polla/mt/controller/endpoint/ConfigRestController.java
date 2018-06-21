@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import polla.mt.controller.procesor.CalcularMarcadores;
 import polla.mt.controller.procesor.CalcularPrimeraFecha;
+import polla.mt.controller.procesor.CalcularSegundaFecha;
 import polla.mt.controller.procesor.CargarPolleros;
 import polla.mt.model.entity.DependenciaPos;
 import polla.mt.model.entity.Listado;
@@ -22,6 +23,9 @@ public class ConfigRestController {
 
     @Autowired
     public CalcularPrimeraFecha calcularPrimeraFecha;
+
+    @Autowired
+    public CalcularSegundaFecha calcularSegundaFecha;
 
     @Autowired
     public CargarPolleros cargarPolleros;
@@ -48,6 +52,13 @@ public class ConfigRestController {
     @RequestMapping(value = "/cargar-primeraFecha/", method = RequestMethod.GET)
     public ResponseEntity<List<String>> calcularPrimeraFecha() {
         List<String> valor = calcularPrimeraFecha.calcularPuntajePrimeraFecha();
+        calcularMarcadores.cargarListado();
+        return new ResponseEntity<List<String>>(valor, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/cargar-segundaFecha/", method = RequestMethod.GET)
+    public ResponseEntity<List<String>> calcularSegundaFecha() {
+        List<String> valor = calcularSegundaFecha.calcularPuntajeSegundaFecha();
         calcularMarcadores.cargarListado();
         return new ResponseEntity<List<String>>(valor, HttpStatus.OK);
     }

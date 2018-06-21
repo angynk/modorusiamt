@@ -1,5 +1,6 @@
 package polla.mt.controller.procesor;
 
+
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -17,15 +18,16 @@ import java.io.IOException;
 import java.util.*;
 
 @Component
-public class CalcularPrimeraFecha {
+public class CalcularSegundaFecha {
 
-    public static String rutaArchivoBase = "C:\\temp\\PrimeraFecha.xls";
+
+    public static String rutaArchivoBase = "C:\\temp\\SegundaFecha.xls";
 
     @Autowired
     private ListaPosicionesServicio listaPosicionesServicio;
-    private  HashMap<String,List<Integer>> resultados;
+    private HashMap<String,List<Integer>> resultados;
 
-    public List<String> calcularPuntajePrimeraFecha() {
+    public List<String> calcularPuntajeSegundaFecha() {
 
         return readExcelAndSaveData();
     }
@@ -48,8 +50,8 @@ public class CalcularPrimeraFecha {
                     if(posicion==1){
                         resultados = obtenerDatosPartidos(row);
                     }else{
-                        Integer codigo = (int) row.getCell(PrimeraFechaDEF.CODIGO).getNumericCellValue();
-                        String correo =  row.getCell(PrimeraFechaDEF.CORREO).getStringCellValue();
+                        Integer codigo = (int) row.getCell(SegundaFechaDEF.CODIGO).getNumericCellValue();
+                        String correo =  row.getCell(SegundaFechaDEF.CORREO).getStringCellValue();
                         Pollero pollero = listaPosicionesServicio.obtenerPollero(codigo,correo);
                         if(pollero!=null){
                             listaPosicionesServicio.crearLogRegistro(pollero);
@@ -81,22 +83,22 @@ public class CalcularPrimeraFecha {
 
     private Integer calcularNuevoPuntaje(Integer puntuacion, Row row) {
         HashMap<String,List<Integer>> predicciones = obtenerDatosPartidos(row);
-     //   puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_1,predicciones);
-//        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_2,predicciones);
-//        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_3,predicciones);
-//        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_4,predicciones);
-//        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_5,predicciones);
-//        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_6,predicciones);
-//        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_7,predicciones);
-//        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_8,predicciones);
-//        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_9,predicciones);
-//        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_10,predicciones);
-//        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_11,predicciones);
-   //     puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_12,predicciones);
-    //    puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_13,predicciones);
-    //    puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_14,predicciones);
-        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_15,predicciones);
-        puntuacion = puntuacion + resultadoPrediccion(PrimeraFechaDEF.PARTIDO_16,predicciones);
+           puntuacion = puntuacion + resultadoPrediccion(SegundaFechaDEF.PARTIDO_1,predicciones);
+//        puntuacion = puntuacion + resultadoPrediccion(SegundaFechaDEF.PARTIDO_2,predicciones);
+//        puntuacion = puntuacion + resultadoPrediccion(SegundaFechaDEF.PARTIDO_3,predicciones);
+//        puntuacion = puntuacion + resultadoPrediccion(SegundaFechaDEF.PARTIDO_4,predicciones);
+//        puntuacion = puntuacion + resultadoPrediccion(SegundaFechaDEF.PARTIDO_5,predicciones);
+//        puntuacion = puntuacion + resultadoPrediccion(SegundaFechaDEF.PARTIDO_6,predicciones);
+//        puntuacion = puntuacion + resultadoPrediccion(SegundaFechaDEF.PARTIDO_7,predicciones);
+//        puntuacion = puntuacion + resultadoPrediccion(SegundaFechaDEF.PARTIDO_8,predicciones);
+//        puntuacion = puntuacion + resultadoPrediccion(SegundaFechaDEF.PARTIDO_9,predicciones);
+//        puntuacion = puntuacion + resultadoPrediccion(SegundaFechaDEF.PARTIDO_10,predicciones);
+//        puntuacion = puntuacion + resultadoPrediccion(SegundaFechaDEF.PARTIDO_11,predicciones);
+        //     puntuacion = puntuacion + resultadoPrediccion(SegundaFechaDEF.PARTIDO_12,predicciones);
+        //    puntuacion = puntuacion + resultadoPrediccion(SegundaFechaDEF.PARTIDO_13,predicciones);
+        //    puntuacion = puntuacion + resultadoPrediccion(SegundaFechaDEF.PARTIDO_14,predicciones);
+//        puntuacion = puntuacion + resultadoPrediccion(SegundaFechaDEF.PARTIDO_15,predicciones);
+//        puntuacion = puntuacion + resultadoPrediccion(SegundaFechaDEF.PARTIDO_16,predicciones);
         return puntuacion;
     }
 
@@ -105,11 +107,11 @@ public class CalcularPrimeraFecha {
         List<Integer> resultado = resultados.get(partido);
         int puntaje = 0;
         if(marcadorExacto(prediccion,resultado)){
-            puntaje = puntaje + PrimeraFechaDEF.PUNTOS_MARCADOR;
+            puntaje = puntaje + SegundaFechaDEF.PUNTOS_MARCADOR;
         }
 
         if(resultadoExacto(prediccion,resultado)){
-            puntaje = puntaje + PrimeraFechaDEF.PUNTOS_RESULTADO;
+            puntaje = puntaje + SegundaFechaDEF.PUNTOS_RESULTADO;
         }
 
         return puntaje;
@@ -154,22 +156,22 @@ public class CalcularPrimeraFecha {
 
     private HashMap<String, List<Integer>> obtenerDatosPartidos(Row row) {
         HashMap<String,List<Integer>> predicciones = new HashMap<String,List<Integer>>();
-       // predicciones.put(PrimeraFechaDEF.PARTIDO_1,obtenerValores(PrimeraFechaDEF.RUSIA,PrimeraFechaDEF.ARABIA,row));
-       // predicciones.put(PrimeraFechaDEF.PARTIDO_2,obtenerValores(PrimeraFechaDEF.EGIPTO,PrimeraFechaDEF.URUGUAY,row));
-       // predicciones.put(PrimeraFechaDEF.PARTIDO_3,obtenerValores(PrimeraFechaDEF.MARRUECOS,PrimeraFechaDEF.IRAN,row));
-       // predicciones.put(PrimeraFechaDEF.PARTIDO_4,obtenerValores(PrimeraFechaDEF.PORTUGAL,PrimeraFechaDEF.ESPANA,row));
-      //  predicciones.put(PrimeraFechaDEF.PARTIDO_5,obtenerValores(PrimeraFechaDEF.FRANCIA,PrimeraFechaDEF.AUSTRALIA,row));
-//        predicciones.put(PrimeraFechaDEF.PARTIDO_6,obtenerValores(PrimeraFechaDEF.PERU,PrimeraFechaDEF.DINAMARCA,row));
-//        predicciones.put(PrimeraFechaDEF.PARTIDO_7,obtenerValores(PrimeraFechaDEF.ARGENTINA,PrimeraFechaDEF.ISLANDIA,row));
-//        predicciones.put(PrimeraFechaDEF.PARTIDO_8,obtenerValores(PrimeraFechaDEF.CROACIA,PrimeraFechaDEF.NIGERIA,row));
-//        predicciones.put(PrimeraFechaDEF.PARTIDO_9,obtenerValores(PrimeraFechaDEF.COSTARICA,PrimeraFechaDEF.SERBIA,row));
-//        predicciones.put(PrimeraFechaDEF.PARTIDO_10,obtenerValores(PrimeraFechaDEF.BRASIL,PrimeraFechaDEF.SUIZA,row));
-//        predicciones.put(PrimeraFechaDEF.PARTIDO_11,obtenerValores(PrimeraFechaDEF.ALEMANIA,PrimeraFechaDEF.MEXICO,row));
-//        predicciones.put(PrimeraFechaDEF.PARTIDO_12,obtenerValores(PrimeraFechaDEF.SUECIA,PrimeraFechaDEF.COREA,row));
-//        predicciones.put(PrimeraFechaDEF.PARTIDO_13,obtenerValores(PrimeraFechaDEF.BELGICA,PrimeraFechaDEF.PANAMA,row));
-//        predicciones.put(PrimeraFechaDEF.PARTIDO_14,obtenerValores(PrimeraFechaDEF.TUNEZ,PrimeraFechaDEF.INGLATERRA,row));
-        predicciones.put(PrimeraFechaDEF.PARTIDO_15,obtenerValores(PrimeraFechaDEF.COLOMBIA,PrimeraFechaDEF.JAPON,row));
-        predicciones.put(PrimeraFechaDEF.PARTIDO_16,obtenerValores(PrimeraFechaDEF.POLONIA,PrimeraFechaDEF.SENEGAL,row));
+         predicciones.put(SegundaFechaDEF.PARTIDO_1,obtenerValores(SegundaFechaDEF.RUSIA,SegundaFechaDEF.EGIPTO,row));
+//         predicciones.put(SegundaFechaDEF.PARTIDO_2,obtenerValores(SegundaFechaDEF.URUGUAY,SegundaFechaDEF.ARABIA,row));
+//         predicciones.put(SegundaFechaDEF.PARTIDO_3,obtenerValores(SegundaFechaDEF.PORTUGAL,SegundaFechaDEF.MARRUECOS,row));
+//         predicciones.put(SegundaFechaDEF.PARTIDO_4,obtenerValores(SegundaFechaDEF.IRAN,SegundaFechaDEF.ESPANA,row));
+//          predicciones.put(SegundaFechaDEF.PARTIDO_5,obtenerValores(SegundaFechaDEF.DINAMARCA,SegundaFechaDEF.AUSTRALIA,row));
+//        predicciones.put(SegundaFechaDEF.PARTIDO_6,obtenerValores(SegundaFechaDEF.FRANCIA,SegundaFechaDEF.PERU,row));
+//        predicciones.put(SegundaFechaDEF.PARTIDO_7,obtenerValores(SegundaFechaDEF.ARGENTINA,SegundaFechaDEF.CROACIA,row));
+//        predicciones.put(SegundaFechaDEF.PARTIDO_8,obtenerValores(SegundaFechaDEF.NIGERIA,SegundaFechaDEF.ISLANDIA,row));
+//        predicciones.put(SegundaFechaDEF.PARTIDO_9,obtenerValores(SegundaFechaDEF.BRASIL,SegundaFechaDEF.COSTARICA,row));
+//        predicciones.put(SegundaFechaDEF.PARTIDO_10,obtenerValores(SegundaFechaDEF.SERBIA,SegundaFechaDEF.SUIZA,row));
+//        predicciones.put(SegundaFechaDEF.PARTIDO_11,obtenerValores(SegundaFechaDEF.COREA,SegundaFechaDEF.MEXICO,row));
+//        predicciones.put(SegundaFechaDEF.PARTIDO_12,obtenerValores(SegundaFechaDEF.ALEMANIA,SegundaFechaDEF.SUECIA,row));
+//        predicciones.put(SegundaFechaDEF.PARTIDO_13,obtenerValores(SegundaFechaDEF.BELGICA,SegundaFechaDEF.TUNEZ,row));
+//        predicciones.put(SegundaFechaDEF.PARTIDO_14,obtenerValores(SegundaFechaDEF.INGLATERRA,SegundaFechaDEF.PANAMA,row));
+//        predicciones.put(SegundaFechaDEF.PARTIDO_15,obtenerValores(SegundaFechaDEF.JAPON,SegundaFechaDEF.SENEGAL,row));
+//        predicciones.put(SegundaFechaDEF.PARTIDO_16,obtenerValores(SegundaFechaDEF.POLONIA,SegundaFechaDEF.COLOMBIA,row));
         return predicciones;
     }
 
